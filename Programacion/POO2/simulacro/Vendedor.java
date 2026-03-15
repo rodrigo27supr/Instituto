@@ -1,24 +1,22 @@
 package POO2.simulacro;
 
-public class Vendedor extends EmpleadoOperativo {
+public class Vendedor extends EmpleadoOperativo{
+    private int ventasRealizadas;
 
-    private static final int precioHora = 20;
-    private int ventasRealizdas = 0;
-
-    public Vendedor(int id, String nombreCompleto) {
-        super(id, nombreCompleto, precioHora);
+    public Vendedor(int idEmpleado, String nombreCompleto) {
+        super(idEmpleado, nombreCompleto, 20);
     }
 
     @Override
     public void actualizarDatosInternos() {
-        ventasRealizdas += 1;
+        ventasRealizadas ++;
     }
 
     @Override
-    public boolean tareaCompletadaConExito(int nivelDificultad) {
-        if (nivelDificultad <= 3) {
+    public boolean comprarExito(int dificultad) {
+        if (dificultad <=3) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }

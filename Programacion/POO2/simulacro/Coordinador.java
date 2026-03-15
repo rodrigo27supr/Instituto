@@ -1,50 +1,47 @@
 package POO2.simulacro;
 
-public class Coordinador extends Empleado{
-    private static final int precioHora = 40;
-    EmpleadoOperativo [] listaEmpleados;
-    private int contadorEmpleados = 0;
+public class Coordinador extends Empleado implements RepartirTareas{
 
-    public Coordinador(int id, String nombreCompleto, int capacidadMaxima) {
-        super(id, nombreCompleto, precioHora);
-        listaEmpleados = new EmpleadoOperativo [capacidadMaxima];
+    EmpleadoOperativo [] listaEmpleados;
+    int contadorEmpleados;
+
+    public Coordinador(int idEmpleado, String nombreCompleto, int capacidadMaxima) {
+        super(idEmpleado, nombreCompleto, 40);
+        listaEmpleados = new EmpleadoOperativo[capacidadMaxima];
     }
 
-    public void guardarEmpleado (EmpleadoOperativo empleadoNuevo) {
-
+    public void añadirEmpleado(Empleado empleadoNuevo) {
         if (contadorEmpleados >= listaEmpleados.length) {
-            System.out.println("El equipo esta completo, no podemos añadir mas empleados");
+            System.out.println("No se pueden añadir más empleados: Oficina llena.");
             return;
         }
-
         for (int contador = 0; contador < contadorEmpleados; contador++) {
-            if (listaEmpleados[contador].getIdEmpleado() == empleadoNuevo.getIdEmpleado()){
-                System.out.println("El empleado esta repetido, no se puede introducir en la lista");
+            if (listaEmpleados[contador].getIdEmpleado() == empleadoNuevo.getIdEmpleado()) {
+                System.out.println("El empleado con ID " + empleadoNuevo.getIdEmpleado() + " ya existe.");
                 return;
+            }
         }
-        }
-
-        listaEmpleados[contadorEmpleados] = empleadoNuevo;
-        contadorEmpleados ++;
-
+        this.listaEmpleados[contadorEmpleados] = (EmpleadoOperativo) empleadoNuevo;
+        this.contadorEmpleados++;
+        System.out.println("Empleado " + empleadoNuevo.getNombreCompleto() + " añadido con éxito.");
     }
 
+
     @Override
-    public boolean mandarTarea(String descripcion, int nivelDificultad) {
+    public boolean reparticionTareas(String descripcion, int dificultad) {
 
         for (int contador = 0; contador < contadorEmpleados; contador++) {
+
             EmpleadoOperativo empleadoActual = listaEmpleados[contador];
 
-            if (descripcion.contains("venta") && empleadoActual instanceof Vendedor) {
-                return empleadoActual.procesoTarea(descripcion, nivelDificultad);
+            if (descripcion.contains("venta") && empleadoActual instanceof Vendedor){
+                return empleadoActual.ejecutorDeTareas(descripcion,dificultad);
             }
-
             if (descripcion.contains("arreglar") && empleadoActual instanceof Tecnico) {
-                return empleadoActual.procesoTarea(descripcion, nivelDificultad);
+                return empleadoActual.ejecutorDeTareas(descripcion,dificultad);
             }
         }
-
-        System.out.println("No hay ningún empleado adecuado para esta tarea.");
+        System.out.println("No hay ningun trabajador disponible para esta tarea");
         return false;
     }
 }

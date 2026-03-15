@@ -1,23 +1,21 @@
 package POO2.simulacro;
 
-public class Tecnico  extends EmpleadoOperativo{
+public class Tecnico extends EmpleadoOperativo{
 
-    private static final int precioHora = 30;
-    private int contadorTrabajosCompletados = 0;
+    int trabajosCompletados;
 
-
-    public Tecnico(int id, String nombreCompleto) {
-        super(id, nombreCompleto, precioHora);
+    public Tecnico(int idEmpleado, String nombreCompleto) {
+        super(idEmpleado, nombreCompleto, 30);
     }
 
     @Override
     public void actualizarDatosInternos() {
-        contadorTrabajosCompletados = contadorTrabajosCompletados + 1;
+        trabajosCompletados ++;
     }
 
     @Override
-    public boolean tareaCompletadaConExito(int nivelDificultad) {
-        if (nivelDificultad <=  3){
+    public boolean comprarExito(int dificultad) {
+        if (dificultad <= 3) {
             return true;
         } else {
             return false;

@@ -1,26 +1,25 @@
 package POO2.simulacro;
 
-public abstract class EmpleadoOperativo extends Empleado implements Asignable {
+public abstract class EmpleadoOperativo extends Empleado implements Tareas {
 
-
-    public EmpleadoOperativo(int id, String nombreCompleto, int precioHora) {
-        super(id, nombreCompleto, precioHora);
+    public EmpleadoOperativo(int idEmpleado, String nombreCompleto, int precioHora) {
+        super(idEmpleado, nombreCompleto, precioHora);
     }
 
-    public abstract void actualizarDatosInternos ();
+    public abstract void actualizarDatosInternos();
 
-    public abstract boolean tareaCompletadaConExito(int nivelDificultad);
+    public abstract boolean comprarExito(int dificultad);
 
     @Override
-    public boolean procesoTarea(String descripcion, int nivelDificultad) {
-        System.out.println("La tarea ha comenzado");
+    public boolean ejecutorDeTareas(String descripcion, int dificultad) {
+        System.out.println("El empleado " + getNombreCompleto());
         actualizarDatosInternos();
-        boolean exito = tareaCompletadaConExito( nivelDificultad);
+        boolean exito = comprarExito(dificultad);
         if (exito == false) {
-            System.out.println("La tarea ha fracasado");
+            System.out.println("La tarea ha fracaso");
         } else {
-            System.out.println("La tarea ha sido un exito");
+            System.out.println("La tarea ha sido completada con exito");
         }
-        return exito;
+        return  exito;
     }
 }
